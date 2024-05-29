@@ -3,6 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { FaShapes } from "react-icons/fa6";
+import { IoSettingsOutline } from "react-icons/io5";
+
 import { usePathname } from "next/navigation";
 
 const menu = [
@@ -14,7 +16,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex justify-between border-b-2 h-[80px] px-5 items-center text-lg">
+    <nav className="flex justify-between border-b-2 h-[80px] px-7 items-center text-lg">
       <Link href="/">
         <FaShapes className="text-2xl text-pink-600" />
       </Link>
@@ -34,7 +36,7 @@ export default function Navbar() {
           </li>
         ))}
       </ul>
-      <button>Setting</button>
+      <IoSettingsOutline className="text-2xl" />
     </nav>
   );
 }
