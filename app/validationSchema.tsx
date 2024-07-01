@@ -10,5 +10,5 @@ export const createIssueSchema = z.object({
     .string({ required_error: "Description is missing" })
     .trim()
     .min(1, { message: "Description is empty" })
-    .max(20, { message: "Description exceeds 20 characters" }),
+    .max(100, { message: "Description exceeds 20 characters" }),
 })
