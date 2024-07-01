@@ -1,14 +1,7 @@
-import prisma from "@/prisma/client"
-import { Button, Section, Strong, Table } from "@radix-ui/themes"
-import Link from "next/link"
-import { formatDate } from "../lib/utils"
-import CustomLink from "../ui/CustomLink"
-import StatusBadge from "../ui/StatusBadge"
+import { Button, Link, Section, Skeleton, Table } from "@radix-ui/themes"
 
-export default async function IssuesPage() {
-  const issues = await prisma.issue.findMany()
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
+export default function IssuesPageLoading() {
+  const issues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   return (
     <>
       <Section>
@@ -20,6 +13,7 @@ export default async function IssuesPage() {
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
+
             <Table.ColumnHeaderCell
               width="150px"
               className="hidden sm:table-cell"
@@ -37,20 +31,18 @@ export default async function IssuesPage() {
         <Table.Body>
           {issues &&
             issues.map((issue) => (
-              <Table.Row key={issue.id}>
+              <Table.Row key={issue}>
                 <Table.Cell>
-                  <CustomLink href={`/issues/${issue.id}`}>
-                    <Strong>{issue.title}</Strong>
-                  </CustomLink>
+                  <Skeleton height="21px" />
                   <div className="sm:hidden mt-2">
-                    <StatusBadge status={issue.status} />
+                    <Skeleton />
                   </div>
                 </Table.Cell>
                 <Table.Cell className="hidden sm:table-cell">
-                  <StatusBadge status={issue.status} />
+                  <Skeleton height="21px" />
                 </Table.Cell>
                 <Table.Cell className="hidden sm:table-cell">
-                  {formatDate(issue.createdAt)}
+                  <Skeleton height="21px" />
                 </Table.Cell>
               </Table.Row>
             ))}

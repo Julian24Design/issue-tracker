@@ -23,7 +23,9 @@ export default function RootLayout({
         <Theme accentColor="crimson">
           {/* <ThemePanel /> */}
           <Navbar />
-          <Container size="2">{children}</Container>
+          <Container size="3" px="5">
+            {children}
+          </Container>
         </Theme>
       </body>
     </html>
