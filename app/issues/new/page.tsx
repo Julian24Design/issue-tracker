@@ -1,7 +1,7 @@
 "use client"
 
-import { ErrorMsg } from "@/ui"
-import { createIssueSchema } from "@/validationSchema"
+import { ErrorMsg } from "@/app/ui"
+import { createIssueSchema } from "@/app/validationSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Heading, Section, TextField } from "@radix-ui/themes"
 import axios from "axios"
