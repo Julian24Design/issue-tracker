@@ -15,13 +15,14 @@ import { notFound } from "next/navigation"
 import Markdown from "react-markdown"
 import Link from "next/link"
 import { Pencil1Icon } from "@radix-ui/react-icons"
+import { validateStrAsPureNum } from "@/app/lib/utils"
 
-export default async function IssueDetailPage({
+export default async function IssueDetail({
   params,
 }: {
   params: { id: string }
 }) {
-  if (!/^\d+$/.test(params.id)) notFound()
+  if (!validateStrAsPureNum(params.id)) notFound()
   const issue = await prisma.issue.findUnique({
     where: { id: parseInt(params.id) },
   })
@@ -31,9 +32,14 @@ export default async function IssueDetailPage({
 
   return (
     <Section>
-      <Flex justify="between" align="center">
+      <Flex
+        direction={{ initial: "column-reverse", xs: "row" }}
+        justify={{ initial: "start", xs: "between" }}
+        align={{ initial: "start", xs: "center" }}
+        gap="5"
+      >
         <Heading>{issue.title}</Heading>
-        <Link href="edit">
+        <Link href={`/issues/${issue.id}/edit`}>
           <Button className="hover:cursor-pointer">
             <Pencil1Icon />
             Edit issue

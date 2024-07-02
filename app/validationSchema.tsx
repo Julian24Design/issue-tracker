@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const createIssueSchema = z.object({
+export const IssueSchema = z.object({
   title: z
     .string({ required_error: "Title is missing" })
     .trim()
