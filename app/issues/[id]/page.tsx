@@ -9,9 +9,12 @@ import {
   Section,
   Separator,
   Text,
+  Button,
 } from "@radix-ui/themes"
 import { notFound } from "next/navigation"
 import Markdown from "react-markdown"
+import Link from "next/link"
+import { Pencil1Icon } from "@radix-ui/react-icons"
 
 export default async function IssueDetailPage({
   params,
@@ -28,7 +31,15 @@ export default async function IssueDetailPage({
 
   return (
     <Section>
-      <Heading>{issue.title}</Heading>
+      <Flex justify="between" align="center">
+        <Heading>{issue.title}</Heading>
+        <Link href="edit">
+          <Button className="hover:cursor-pointer">
+            <Pencil1Icon />
+            Edit issue
+          </Button>
+        </Link>
+      </Flex>
       <Flex gap="4" my="5" align="center">
         <StatusBadge status={issue.status}></StatusBadge>
         <Separator orientation="vertical"></Separator>

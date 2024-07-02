@@ -12,7 +12,7 @@ export default async function IssuesPage() {
     <>
       <Section>
         <Link href="/issues/new">
-          <Button>Add issue</Button>
+          <Button className="hover:cursor-pointer">Add issue</Button>
         </Link>
       </Section>
       <Table.Root variant="surface">
