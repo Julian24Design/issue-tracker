@@ -1,6 +1,6 @@
-import { formatDate } from "@/app/lib/utils"
-import StatusBadge from "@/app/ui/StatusBadge"
-import prisma from "@/prisma/client"
+import { formatDate } from "@/lib/utils"
+import { StatusBadge } from "@/ui"
+import prisma from "prisma/client"
 import {
   Box,
   Card,
