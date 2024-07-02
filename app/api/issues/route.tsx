@@ -1,4 +1,4 @@
-import prisma from "@/prisma/client"
+import prisma from "prisma/client"
 import { createIssueSchema } from "../../validationSchema"
 
 export async function POST(request: Request) {

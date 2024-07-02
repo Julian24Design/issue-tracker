@@ -1,9 +1,8 @@
-import prisma from "@/prisma/client"
+import { CustomLink, StatusBadge } from "@/ui"
+import prisma from "prisma/client"
 import { Button, Section, Strong, Table } from "@radix-ui/themes"
 import Link from "next/link"
-import { formatDate } from "../lib/utils"
-import CustomLink from "../ui/CustomLink"
-import StatusBadge from "../ui/StatusBadge"
+import { formatDate } from "@/lib/utils"
 
 export default async function IssuesPage() {
   const issues = await prisma.issue.findMany()

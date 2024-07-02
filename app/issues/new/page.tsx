@@ -1,9 +1,9 @@
 "use client"
 
-import ErrorMsg from "@/app/ui/ErrorMsg"
-import { createIssueSchema } from "@/app/validationSchema"
+import { ErrorMsg } from "@/ui"
+import { createIssueSchema } from "@/validationSchema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button, Heading, Section, TextField, Skeleton } from "@radix-ui/themes"
+import { Button, Heading, Section, TextField } from "@radix-ui/themes"
 import axios from "axios"
 import "easymde/dist/easymde.min.css"
 import dynamic from "next/dynamic"
