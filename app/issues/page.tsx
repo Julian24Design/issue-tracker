@@ -3,6 +3,7 @@ import prisma from "@/prisma/client"
 import { Button, Section, Strong, Table } from "@radix-ui/themes"
 import Link from "next/link"
 import { formatDate } from "@/app/lib/utils"
+import { PlusIcon } from "@radix-ui/react-icons"
 
 export default async function IssuesPage() {
   const issues = await prisma.issue.findMany()
@@ -12,7 +13,10 @@ export default async function IssuesPage() {
     <>
       <Section>
         <Link href="/issues/new">
-          <Button className="hover:cursor-pointer">Add issue</Button>
+          <Button className="hover:cursor-pointer">
+            <PlusIcon />
+            Add issue
+          </Button>
         </Link>
       </Section>
       <Table.Root variant="surface">
