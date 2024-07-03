@@ -15,20 +15,20 @@ import { notFound } from "next/navigation"
 import Markdown from "react-markdown"
 import Link from "next/link"
 import { Pencil1Icon } from "@radix-ui/react-icons"
-import { validateStrAsPureNum } from "@/app/lib/utils"
 
 export default async function IssueDetail({
   params,
 }: {
   params: { id: string }
 }) {
-  if (!validateStrAsPureNum(params.id)) notFound()
-  const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.id) },
-  })
-  if (!issue) notFound()
+  const id = Number(params.id)
+  if (Number.isNaN(id)) notFound()
 
-  // await new Promise((resolve) => setTimeout(resolve, 2000))
+  const issue = await prisma.issue.findUnique({
+    where: { id: id },
+  })
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+  if (!issue) notFound()
 
   return (
     <Section>
