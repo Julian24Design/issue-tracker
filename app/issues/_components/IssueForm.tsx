@@ -1,16 +1,17 @@
 "use client"
 
 import { ErrorMsg } from "@/app/ui"
-import { TextField, Button } from "@radix-ui/themes"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { IssueSchema } from "@/app/validationSchema"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Issue } from "@prisma/client"
+import { Button, TextField } from "@radix-ui/themes"
 import axios from "axios"
 import "easymde/dist/easymde.min.css"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
-import { IssueSchema } from "@/app/validationSchema"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import toast from "react-hot-toast"
 import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Issue } from "@prisma/client"
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 })
@@ -29,10 +30,11 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 1000))
       await axios.post("/api/issues", data)
       router.push("/issues")
     } catch (error) {
+      toast.error("Something went wrong, please try again later.")
       console.log(error)
     }
   }
