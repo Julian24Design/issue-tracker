@@ -10,8 +10,3 @@ export const formatDate = (date: Date) => {
     })
     .replace(",", "")
 }
-
-export const validateStrAsPureNum = (str: string) => {
-  if (!/^\d+$/.test(str)) return false
-  return true
-}
