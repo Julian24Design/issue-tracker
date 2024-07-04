@@ -14,7 +14,7 @@ import {
 import { notFound } from "next/navigation"
 import Markdown from "react-markdown"
 import Link from "next/link"
-import { Pencil1Icon } from "@radix-ui/react-icons"
+import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons"
 
 export default async function IssueDetail({
   params,
@@ -39,12 +39,18 @@ export default async function IssueDetail({
         gap="5"
       >
         <Heading>{issue.title}</Heading>
-        <Link href={`/issues/${issue.id}/edit`}>
-          <Button className="hover:cursor-pointer">
-            <Pencil1Icon />
-            Edit issue
+        <Flex gap="2">
+          <Link href={`/issues/${issue.id}/edit`}>
+            <Button className="hover:cursor-pointer">
+              <Pencil1Icon />
+              Edit issue
+            </Button>
+          </Link>
+          <Button variant="soft" className="hover:cursor-pointer">
+            <TrashIcon />
+            Delete
           </Button>
-        </Link>
+        </Flex>
       </Flex>
       <Flex gap="4" my="5" align="center">
         <StatusBadge status={issue.status}></StatusBadge>
