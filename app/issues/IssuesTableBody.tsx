@@ -5,7 +5,7 @@ import prisma from "@/prisma/client"
 
 export default async function IssuesTableBody() {
   const issues = await prisma.issue.findMany()
-  // await new Promise((resolve) => setTimeout(resolve, 1000))
+  await new Promise((resolve) => setTimeout(resolve, 1000))
 
   return (
     <Table.Body>
