@@ -1,5 +1,6 @@
 "use client"
 
+import ErrorAlert from "@/app/ui/ErrorAlert"
 import { TrashIcon } from "@radix-ui/react-icons"
 import { AlertDialog, Box, Button, Flex } from "@radix-ui/themes"
 import axios from "axios"
@@ -23,12 +24,12 @@ export default function DeleteBtn({ issueId }: { issueId: number }) {
       setError(true)
       setDeleting(false)
       console.log(error)
-      // toast.error("Something went wrong, pleas try again later.")
     }
   }
 
   return (
     <>
+      <ErrorAlert isError={isError} setError={setError} />
       <AlertDialog.Root>
         <AlertDialog.Trigger>
           <Button
@@ -64,27 +65,6 @@ export default function DeleteBtn({ issueId }: { issueId: number }) {
                 onClick={deleteIssue}
               >
                 Delete
-              </Button>
-            </AlertDialog.Action>
-          </Flex>
-        </AlertDialog.Content>
-      </AlertDialog.Root>
-
-      <AlertDialog.Root open={isError}>
-        <AlertDialog.Content maxWidth="450px" align="center">
-          <AlertDialog.Title>Something went wrong</AlertDialog.Title>
-          <AlertDialog.Description size="2">
-            Please try again later.
-          </AlertDialog.Description>
-          <Flex gap="3" mt="4" justify="end">
-            <AlertDialog.Action>
-              <Button
-                variant="solid"
-                color="red"
-                className="hover:cursor-pointer"
-                onClick={() => setError(false)}
-              >
-                Got it
               </Button>
             </AlertDialog.Action>
           </Flex>

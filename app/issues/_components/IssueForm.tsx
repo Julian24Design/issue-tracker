@@ -12,10 +12,14 @@ import toast from "react-hot-toast"
 import { z } from "zod"
 import SimpleMDE from "react-simplemde-editor"
 import "easymde/dist/easymde.min.css"
+import { useState } from "react"
+import ErrorAlert from "@/app/ui/ErrorAlert"
 
 type Inputs = z.infer<typeof IssueSchema>
 
 export default function IssueForm({ issue }: { issue?: Issue }) {
+  const [isError, setError] = useState(false)
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -23,11 +27,9 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
     formState: { isSubmitting, errors },
   } = useForm<Inputs>({ resolver: zodResolver(IssueSchema) })
 
-  const router = useRouter()
-
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      // await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000))
       if (issue) {
         await axios.patch(`/api/issues/${issue.id}`, data)
         router.push(`/issues/${issue.id}`)
@@ -40,39 +42,43 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
         toast.success("New issue added.")
       }
     } catch (error) {
-      toast.error("Something went wrong, please try again later.")
+      setError(true)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-3 mb-6">
-        <TextField.Root
-          placeholder="Title"
-          defaultValue={issue?.title}
-          {...register("title")}
-        ></TextField.Root>
-        <ErrorMsg>{errors.title?.message}</ErrorMsg>
-      </div>
-      <div>
-        <Controller
-          name="description"
-          control={control}
-          defaultValue={issue?.description}
-          render={({ field }) => (
-            <SimpleMDE placeholder="Description" {...field} />
-          )}
-        ></Controller>
-        <ErrorMsg>{errors.description?.message}</ErrorMsg>
-      </div>
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        loading={isSubmitting}
-        mt={errors.description ? "5" : "0"}
-      >
-        Submit
-      </Button>
-    </form>
+    <>
+      <ErrorAlert isError={isError} setError={setError} />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="space-y-3 mb-6">
+          <TextField.Root
+            placeholder="Title"
+            defaultValue={issue?.title}
+            {...register("title")}
+          ></TextField.Root>
+          <ErrorMsg>{errors.title?.message}</ErrorMsg>
+        </div>
+        <div>
+          <Controller
+            name="description"
+            control={control}
+            defaultValue={issue?.description}
+            render={({ field }) => (
+              <SimpleMDE placeholder="Description" {...field} />
+            )}
+          ></Controller>
+          <ErrorMsg>{errors.description?.message}</ErrorMsg>
+        </div>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          loading={isSubmitting}
+          mt={errors.description ? "5" : "0"}
+          className="hover:cursor-pointer"
+        >
+          {issue ? "Update" : "Submit"}
+        </Button>
+      </form>
+    </>
   )
 }
