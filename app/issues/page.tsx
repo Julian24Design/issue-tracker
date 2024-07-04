@@ -1,14 +1,13 @@
-import { CustomLink, StatusBadge } from "@/app/ui"
-import prisma from "@/prisma/client"
-import { Button, Section, Strong, Table } from "@radix-ui/themes"
-import Link from "next/link"
-import { formatDate } from "@/app/lib/utils"
 import { PlusIcon } from "@radix-ui/react-icons"
+import { Button, Section, Table } from "@radix-ui/themes"
+import Link from "next/link"
+import { Suspense } from "react"
+import IssuesTableBody from "./IssuesTableBody"
+import IssuesTableBodyLoading from "./IssuesTableBodyLoading"
+
+export const dynamic = "force-dynamic"
 
 export default async function IssuesPage() {
-  const issues = await prisma.issue.findMany()
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
   return (
     <>
       <Section>
@@ -37,27 +36,9 @@ export default async function IssuesPage() {
             </Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
-        <Table.Body>
-          {issues &&
-            issues.map((issue) => (
-              <Table.Row key={issue.id}>
-                <Table.Cell>
-                  <CustomLink href={`/issues/${issue.id}`}>
-                    <Strong>{issue.title}</Strong>
-                  </CustomLink>
-                  <div className="sm:hidden mt-2">
-                    <StatusBadge status={issue.status} />
-                  </div>
-                </Table.Cell>
-                <Table.Cell className="hidden sm:table-cell">
-                  <StatusBadge status={issue.status} />
-                </Table.Cell>
-                <Table.Cell className="hidden sm:table-cell">
-                  {formatDate(issue.createdAt)}
-                </Table.Cell>
-              </Table.Row>
-            ))}
-        </Table.Body>
+        <Suspense fallback={<IssuesTableBodyLoading />}>
+          <IssuesTableBody />
+        </Suspense>
       </Table.Root>
     </>
   )

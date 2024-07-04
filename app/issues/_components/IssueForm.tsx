@@ -6,15 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Issue } from "@prisma/client"
 import { Button, TextField } from "@radix-ui/themes"
 import axios from "axios"
-import "easymde/dist/easymde.min.css"
-import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { z } from "zod"
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-})
+import SimpleMDE from "react-simplemde-editor"
+import "easymde/dist/easymde.min.css"
 
 type Inputs = z.infer<typeof IssueSchema>
 
@@ -30,18 +27,26 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      await axios.post("/api/issues", data)
-      router.push("/issues")
+      // await new Promise((resolve) => setTimeout(resolve, 1000))
+      if (issue) {
+        await axios.patch(`/api/issues/${issue.id}`, data)
+        router.push(`/issues/${issue.id}`)
+        router.refresh()
+        toast.success("Issue updated.")
+      } else {
+        await axios.post("/api/issues", data)
+        router.push("/issues")
+        router.refresh()
+        toast.success("New issue added.")
+      }
     } catch (error) {
       toast.error("Something went wrong, please try again later.")
-      console.log(error)
     }
   }
 
   return (
-    <form className="space-y-6 mt-10" onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-3">
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="space-y-3 mb-6">
         <TextField.Root
           placeholder="Title"
           defaultValue={issue?.title}
