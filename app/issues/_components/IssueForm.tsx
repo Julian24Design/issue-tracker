@@ -18,8 +18,8 @@ type Inputs = z.infer<typeof IssueSchema>
 export default function IssueForm({ issue }: { issue?: Issue }) {
   const {
     register,
-    control,
     handleSubmit,
+    control,
     formState: { isSubmitting, errors },
   } = useForm<Inputs>({ resolver: zodResolver(IssueSchema) })
 
@@ -65,7 +65,12 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
         ></Controller>
         <ErrorMsg>{errors.description?.message}</ErrorMsg>
       </div>
-      <Button type="submit" disabled={isSubmitting} loading={isSubmitting}>
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        loading={isSubmitting}
+        mt={errors.description ? "5" : "0"}
+      >
         Submit
       </Button>
     </form>
