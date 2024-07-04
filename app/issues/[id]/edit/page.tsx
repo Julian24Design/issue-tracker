@@ -1,7 +1,12 @@
 import { Section, Heading } from "@radix-ui/themes"
-import IssueForm from "@/app/issues/_components/IssueForm"
 import { notFound } from "next/navigation"
 import prisma from "@/prisma/client"
+import dynamic from "next/dynamic"
+import IssueFormLoading from "@/app/issues/_components/IssueFormLoading"
+const IssueForm = dynamic(() => import("@/app/issues/_components/IssueForm"), {
+  ssr: false,
+  loading: () => <IssueFormLoading />,
+})
 
 export default async function EditIssue({
   params,
@@ -16,14 +21,14 @@ export default async function EditIssue({
   const issue = await prisma.issue.findUnique({
     where: { id: id },
   })
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  // await new Promise((resolve) => setTimeout(resolve, 1000))
 
   // If result is null, go 404
   if (!issue) notFound()
 
   return (
     <Section>
-      <Heading>Edit issue</Heading>
+      <Heading className="mb-10">Edit issue</Heading>
       <IssueForm issue={issue} />
     </Section>
   )

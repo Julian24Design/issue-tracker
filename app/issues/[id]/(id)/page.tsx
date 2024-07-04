@@ -27,7 +27,7 @@ export default async function IssueDetail({
   const issue = await prisma.issue.findUnique({
     where: { id: id },
   })
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  // await new Promise((resolve) => setTimeout(resolve, 1000))
   if (!issue) notFound()
 
   return (
