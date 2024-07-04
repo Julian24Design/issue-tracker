@@ -48,3 +48,34 @@ export async function PATCH(
     return Response.json("Unknown error", { status: 500 })
   }
 }
+
+export async function DELETE(
+  request: Request,
+  context: { params: { id: string } }
+) {
+  // Validate id type
+  const id = Number(context.params.id)
+  if (Number.isNaN(id)) return Response.json("Invalid ID", { status: 400 })
+
+  // Validate id existence
+  try {
+    const issue = await prisma.issue.findUnique({
+      where: { id: id },
+    })
+    if (!issue) return Response.json("ID not found", { status: 404 })
+  } catch (error) {
+    if (error instanceof Error) console.log(error.message)
+    return Response.json("Unknown error", { status: 500 })
+  }
+
+  // Mutation
+  try {
+    const deletedIssue = await prisma.issue.delete({
+      where: { id: id },
+    })
+    return Response.json(deletedIssue, { status: 200 })
+  } catch (error) {
+    if (error instanceof Error) console.log(error.message)
+    return Response.json("Unknown error", { status: 500 })
+  }
+}

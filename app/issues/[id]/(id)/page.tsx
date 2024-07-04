@@ -15,6 +15,7 @@ import { notFound } from "next/navigation"
 import Markdown from "react-markdown"
 import Link from "next/link"
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons"
+import DeleteBtn from "../DeleteBtn"
 
 export default async function IssueDetail({
   params,
@@ -46,10 +47,7 @@ export default async function IssueDetail({
               Edit issue
             </Button>
           </Link>
-          <Button variant="soft" className="hover:cursor-pointer">
-            <TrashIcon />
-            Delete
-          </Button>
+          <DeleteBtn issueId={id} />
         </Flex>
       </Flex>
       <Flex gap="4" my="5" align="center">
