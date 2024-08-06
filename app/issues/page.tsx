@@ -12,7 +12,7 @@ export default async function IssuesPage() {
     <>
       <Section>
         <Link href="/issues/new">
-          <Button className="hover:cursor-pointer">
+          <Button>
             <PlusIcon />
             Add issue
           </Button>

@@ -42,7 +42,7 @@ export default async function IssueDetail({
         <Heading>{issue.title}</Heading>
         <Flex gap="2">
           <Link href={`/issues/${issue.id}/edit`}>
-            <Button className="hover:cursor-pointer">
+            <Button>
               <Pencil1Icon />
               Edit issue
             </Button>

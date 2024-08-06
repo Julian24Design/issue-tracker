@@ -32,12 +32,7 @@ export default function DeleteBtn({ issueId }: { issueId: number }) {
       <ErrorAlert isError={isError} setError={setError} />
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button
-            variant="soft"
-            className="hover:cursor-pointer"
-            disabled={isDeleting}
-            loading={isDeleting}
-          >
+          <Button variant="soft" disabled={isDeleting} loading={isDeleting}>
             <TrashIcon />
             Delete
           </Button>
@@ -49,21 +44,12 @@ export default function DeleteBtn({ issueId }: { issueId: number }) {
           </AlertDialog.Description>
           <Flex gap="3" mt="4" justify="end">
             <AlertDialog.Cancel>
-              <Button
-                variant="soft"
-                color="gray"
-                className="hover:cursor-pointer"
-              >
+              <Button variant="soft" color="gray">
                 Cancel
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
-              <Button
-                variant="solid"
-                color="red"
-                className="hover:cursor-pointer"
-                onClick={deleteIssue}
-              >
+              <Button variant="solid" color="red" onClick={deleteIssue}>
                 Delete
               </Button>
             </AlertDialog.Action>

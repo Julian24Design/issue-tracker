@@ -74,7 +74,6 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
           disabled={isSubmitting}
           loading={isSubmitting}
           mt={errors.description ? "5" : "0"}
-          className="hover:cursor-pointer"
         >
           {issue ? "Update" : "Submit"}
         </Button>
