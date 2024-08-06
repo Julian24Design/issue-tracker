@@ -1,10 +1,10 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import "@radix-ui/themes/styles.css"
 import Navbar from "./Navbar"
 import { Container, Theme, ThemePanel } from "@radix-ui/themes"
 import { Toaster } from "react-hot-toast"
+import AuthProvider from "./auth/Provider"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 
@@ -31,10 +31,12 @@ export default function RootLayout({
         />
         <Theme accentColor="crimson">
           {/* <ThemePanel /> */}
-          <Navbar />
-          <Container size="3" px="5">
-            {children}
-          </Container>
+          <AuthProvider>
+            <Navbar />
+            <Container size="3" px="5">
+              {children}
+            </Container>
+          </AuthProvider>
         </Theme>
       </body>
     </html>
