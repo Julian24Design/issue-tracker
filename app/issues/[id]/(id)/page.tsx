@@ -16,7 +16,7 @@ import Markdown from "react-markdown"
 import Link from "next/link"
 import { Pencil1Icon } from "@radix-ui/react-icons"
 import DeleteBtn from "../DeleteBtn"
-import { getServerSession } from "next-auth"
+import { auth } from "@/auth"
 
 export default async function IssueDetail({
   params,
@@ -32,7 +32,7 @@ export default async function IssueDetail({
   // await new Promise((resolve) => setTimeout(resolve, 1000))
   if (!issue) notFound()
 
-  const session = await getServerSession()
+  const session = await auth()
 
   return (
     <Section>
