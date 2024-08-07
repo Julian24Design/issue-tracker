@@ -14,8 +14,9 @@ import {
 import { notFound } from "next/navigation"
 import Markdown from "react-markdown"
 import Link from "next/link"
-import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons"
+import { Pencil1Icon } from "@radix-ui/react-icons"
 import DeleteBtn from "../DeleteBtn"
+import { getServerSession } from "next-auth"
 
 export default async function IssueDetail({
   params,
@@ -31,6 +32,8 @@ export default async function IssueDetail({
   // await new Promise((resolve) => setTimeout(resolve, 1000))
   if (!issue) notFound()
 
+  const session = await getServerSession()
+
   return (
     <Section>
       <Flex
@@ -40,15 +43,17 @@ export default async function IssueDetail({
         gap="5"
       >
         <Heading>{issue.title}</Heading>
-        <Flex gap="2">
-          <Link href={`/issues/${issue.id}/edit`}>
-            <Button>
-              <Pencil1Icon />
-              Edit issue
-            </Button>
-          </Link>
-          <DeleteBtn issueId={id} />
-        </Flex>
+        {session && (
+          <Flex gap="2">
+            <Link href={`/issues/${issue.id}/edit`}>
+              <Button>
+                <Pencil1Icon />
+                Edit issue
+              </Button>
+            </Link>
+            <DeleteBtn issueId={id} />
+          </Flex>
+        )}
       </Flex>
       <Flex gap="4" my="5" align="center">
         <StatusBadge status={issue.status}></StatusBadge>
