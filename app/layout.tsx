@@ -4,7 +4,8 @@ import "./globals.css"
 import Navbar from "./Navbar"
 import { Container, Theme, ThemePanel } from "@radix-ui/themes"
 import { Toaster } from "react-hot-toast"
-import AuthProvider from "./auth/Provider"
+import { auth } from "@/auth"
+import { PropsWithChildren } from "react"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 
@@ -13,11 +14,9 @@ export const metadata: Metadata = {
   description: "The best issue tracker you ever dream of.",
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default async function RootLayout({ children }: PropsWithChildren) {
+  const session = await auth()
+
   return (
     <html lang="en">
       <body className={inter.variable}>
@@ -31,12 +30,10 @@ export default function RootLayout({
         />
         <Theme accentColor="crimson">
           {/* <ThemePanel /> */}
-          <AuthProvider>
-            <Navbar />
-            <Container size="3" px="5">
-              {children}
-            </Container>
-          </AuthProvider>
+          <Navbar session={session} />
+          <Container size="3" px="5">
+            {children}
+          </Container>
         </Theme>
       </body>
     </html>
