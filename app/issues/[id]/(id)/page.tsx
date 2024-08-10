@@ -1,24 +1,11 @@
 import { formatDate } from '@/app/lib/utils'
 import { StatusBadge } from '@/app/ui'
 import prisma from '@/prisma/client'
-import {
-  Box,
-  Card,
-  Flex,
-  Heading,
-  Section,
-  Separator,
-  Text,
-  Button,
-  Select,
-  Avatar,
-} from '@radix-ui/themes'
+import { Box, Card, Flex, Heading, Section, Separator, Text } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
 import Markdown from 'react-markdown'
-import Link from 'next/link'
-import { Pencil1Icon } from '@radix-ui/react-icons'
-import DeleteBtn from '../DeleteBtn'
 import { auth } from '@/auth'
+import ActionBtns from '../ActionBtns'
 
 export default async function IssueDetail({ params }: { params: { id: string } }) {
   // Validate id format
@@ -43,7 +30,7 @@ export default async function IssueDetail({ params }: { params: { id: string } }
         gap='5'
       >
         <Heading>{issue.title}</Heading>
-        {session && renderActions()}
+        {session && <ActionBtns issue={issue} users={users} />}
       </Flex>
       <Flex gap='4' my='5' align='center'>
         <StatusBadge status={issue.status}></StatusBadge>
@@ -57,37 +44,4 @@ export default async function IssueDetail({ params }: { params: { id: string } }
       </Card>
     </Section>
   )
-
-  function renderActions() {
-    return (
-      <Flex gap='2'>
-        <Select.Root defaultValue='unassigned'>
-          <Select.Trigger />
-          <Select.Content position='popper'>
-            {users.map((user) => (
-              <Select.Item key={user.id} value={user.id}>
-                <Flex align='center' gap='1'>
-                  <Avatar
-                    src={user.image!}
-                    fallback={user.name!.charAt(0).toUpperCase()}
-                    radius='full'
-                    className='w-4 h-4'
-                  />
-                  {user.name}
-                </Flex>
-              </Select.Item>
-            ))}
-            <Select.Item value='unassigned'>Unassigned</Select.Item>
-          </Select.Content>
-        </Select.Root>
-        <Link href={`/issues/${issue!.id}/edit`}>
-          <Button>
-            <Pencil1Icon />
-            Edit issue
-          </Button>
-        </Link>
-        <DeleteBtn issueId={id} />
-      </Flex>
-    )
-  }
 }
