@@ -1,13 +1,10 @@
-import { Status } from "@prisma/client"
-import { Badge } from "@radix-ui/themes"
+import { Status } from '@prisma/client'
+import { Badge } from '@radix-ui/themes'
 
-const statusMap: Record<
-  Status,
-  { label: string; color: "orange" | "blue" | "grass" }
-> = {
-  OPEN: { label: "Open", color: "orange" },
-  IN_PROGRESS: { label: "In Progress", color: "blue" },
-  CLOSED: { label: "Closed", color: "grass" },
+const statusMap: Record<Status, { label: string; color: 'orange' | 'blue' | 'grass' }> = {
+  OPEN: { label: 'Open', color: 'orange' },
+  IN_PROGRESS: { label: 'In Progress', color: 'blue' },
+  CLOSED: { label: 'Closed', color: 'grass' },
 }
 
 export default function StatusBadge({ status }: { status: Status }) {
@@ -23,7 +20,5 @@ export default function StatusBadge({ status }: { status: Status }) {
   //     color = "grass"
   //     break
   // }
-  return (
-    <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
-  )
+  return <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
 }
