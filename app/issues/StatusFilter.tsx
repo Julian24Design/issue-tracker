@@ -20,16 +20,16 @@ export default function StatusFilter() {
 
   const router = useRouter()
 
-  // Append search params to url
+  // Filter by setting status in url
   const filter = (value: string) => {
-    const orderBy = searchParams.get('orderBy')
-    const order = searchParams.get('order')
-    const url = new URLSearchParams()
-    if (orderBy) url.append('orderBy', orderBy)
-    if (order) url.append('order', order)
-    if (value !== 'all') url.append('status', value)
-    const query = url.toString() ? '?' + url.toString() : '/issues'
-    router.push(query)
+    const params = new URLSearchParams(searchParams)
+    if (value !== 'all') {
+      params.set('status', value)
+    } else {
+      params.delete('status')
+    }
+    const query = params.toString() ? '?' + params.toString() : ''
+    router.push('/issues' + query)
   }
 
   return (

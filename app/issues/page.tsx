@@ -10,7 +10,7 @@ import { ChevronUpIcon, ChevronDownIcon } from '@radix-ui/react-icons'
 
 export const dynamic = 'force-dynamic'
 
-export type IssuesPageProps = {
+export type Props = {
   searchParams: { status: Status; orderBy: keyof Issue; order: 'asc' | 'desc' }
 }
 
@@ -30,7 +30,7 @@ export const columns = [
   },
 ]
 
-export default async function IssuesPage({ searchParams }: IssuesPageProps) {
+export default async function IssuesPage({ searchParams }: Props) {
   // Evaluate the toggled order for the case of clicking the same column
   let toggledOrder: typeof searchParams.order | undefined
   if (!searchParams.order) {

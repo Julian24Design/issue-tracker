@@ -3,9 +3,9 @@ import { formatDate } from '@/app/lib/utils'
 import { CustomLink, StatusBadge } from '@/app/ui'
 import prisma from '@/prisma/client'
 import { Issue, Status } from '@prisma/client'
-import { IssuesPageProps, columns } from './page'
+import { Props, columns } from './page'
 
-export default async function IssuesTableBody({ searchParams }: IssuesPageProps) {
+export default async function IssuesTableBody({ searchParams }: Props) {
   // Validate search params
   const status = Object.values(Status).includes(searchParams.status)
     ? searchParams.status
