@@ -1,6 +1,6 @@
 'use client'
 
-import { ErrorMsg } from '@/app/ui'
+import { ErrorMsg, ErrorAlert } from '@/app/ui'
 import { IssueSchema } from '@/app/validationSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Issue } from '@prisma/client'
@@ -13,7 +13,6 @@ import { z } from 'zod'
 import SimpleMDE from 'react-simplemde-editor'
 import 'easymde/dist/easymde.min.css'
 import { useState } from 'react'
-import ErrorAlert from '@/app/ui/ErrorAlert'
 
 type Inputs = z.infer<typeof IssueSchema>
 
