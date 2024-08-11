@@ -12,23 +12,29 @@ export default function StatusFilter() {
     { label: 'All', value: 'all' },
   ]
 
-  // Get default value from search param
+  // Get <Select> value from search params
   const searchParams = useSearchParams()
   const status = searchParams.get('status')
-  const isValid = status && Object.values(Status).includes(status as Status)
-  const defaultValue = isValid ? status : undefined
+  const statusIsValid = status && Object.values(Status).includes(status as Status)
+  const value = statusIsValid ? status : 'all'
 
   const router = useRouter()
 
+  // Append search params to url
+  const filter = (value: string) => {
+    const orderBy = searchParams.get('orderBy')
+    const order = searchParams.get('order')
+    const url = new URLSearchParams()
+    if (orderBy) url.append('orderBy', orderBy)
+    if (order) url.append('order', order)
+    if (value !== 'all') url.append('status', value)
+    const query = url.toString() ? '?' + url.toString() : '/issues'
+    router.push(query)
+  }
+
   return (
-    <Select.Root
-      defaultValue={defaultValue}
-      onValueChange={(value) => {
-        const url = value === 'all' ? '/issues' : '?status=' + value
-        router.push(url)
-      }}
-    >
-      <Select.Trigger placeholder='Filter status' />
+    <Select.Root value={value} onValueChange={filter}>
+      <Select.Trigger />
       <Select.Content>
         <Select.Group>
           {statuses.map((status) => (
