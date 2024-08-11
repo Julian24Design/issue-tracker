@@ -6,12 +6,12 @@ import IssuesTableBody from './IssuesTableBody'
 import IssuesTableBodyLoading from './IssuesTableBodyLoading'
 import StatusFilter from './StatusFilter'
 import { Issue, Status } from '@prisma/client'
-import { ChevronUpIcon } from '@radix-ui/react-icons'
+import { ChevronUpIcon, ChevronDownIcon } from '@radix-ui/react-icons'
 
 export const dynamic = 'force-dynamic'
 
 export type IssuesPageProps = {
-  searchParams: { status: Status; orderBy: keyof Issue }
+  searchParams: { status: Status; orderBy: keyof Issue; order: 'asc' | 'desc' }
 }
 
 export const columns = [
@@ -31,6 +31,16 @@ export const columns = [
 ]
 
 export default async function IssuesPage({ searchParams }: IssuesPageProps) {
+  // if param order is asc, flip it to desc
+  // if param order is desc, remove it
+  // if param order doesn't exist, set it as asc
+  let order: typeof searchParams.order | undefined
+  if (!searchParams.order) {
+    order = 'asc'
+  } else if (searchParams.order === 'asc') {
+    order = 'desc'
+  }
+
   return (
     <Section>
       <Flex mb='6' justify='between'>
@@ -52,11 +62,14 @@ export default async function IssuesPage({ searchParams }: IssuesPageProps) {
                 className={column.className}
               >
                 <Link
-                  href={{ query: { orderBy: column.orderBy } }}
+                  href={{ query: { orderBy: column.orderBy, order } }}
                   className='flex items-center gap-1 hover:underline underline-offset-4 decoration-dotted'
                 >
                   {column.label}
-                  {column.orderBy === searchParams.orderBy && <ChevronUpIcon />}
+                  {column.orderBy === searchParams.orderBy &&
+                    searchParams.order === 'asc' && <ChevronUpIcon />}
+                  {column.orderBy === searchParams.orderBy &&
+                    searchParams.order === 'desc' && <ChevronDownIcon />}
                 </Link>
               </Table.ColumnHeaderCell>
             ))}

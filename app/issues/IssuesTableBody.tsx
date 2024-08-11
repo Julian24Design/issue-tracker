@@ -10,8 +10,11 @@ export default async function IssuesTableBody({ searchParams }: IssuesPageProps)
   const status = Object.values(Status).includes(searchParams.status)
     ? searchParams.status
     : undefined
+  const order = ['asc', 'desc'].includes(searchParams.order)
+    ? searchParams.order
+    : undefined
   const orderBy = columns.map((column) => column.orderBy).includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: 'asc' }
+    ? { [searchParams.orderBy]: order }
     : undefined
 
   const issues = await prisma.issue.findMany({ where: { status }, orderBy })
