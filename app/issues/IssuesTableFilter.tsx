@@ -4,7 +4,7 @@ import { Status } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-export default function StatusFilter() {
+export default function IssuesTableFilter() {
   const statuses: { label: string; value: Status | 'all' }[] = [
     { label: 'Open', value: 'OPEN' },
     { label: 'In Progress', value: 'IN_PROGRESS' },
