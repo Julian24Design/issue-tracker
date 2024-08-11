@@ -5,11 +5,32 @@ import { Suspense } from 'react'
 import IssuesTableBody from './IssuesTableBody'
 import IssuesTableBodyLoading from './IssuesTableBodyLoading'
 import StatusFilter from './StatusFilter'
-import { Status } from '@prisma/client'
+import { Issue, Status } from '@prisma/client'
+import { ChevronUpIcon } from '@radix-ui/react-icons'
 
 export const dynamic = 'force-dynamic'
 
-export default async function IssuesPage({ searchParams }: { searchParams: { status: Status } }) {
+export type IssuesPageProps = {
+  searchParams: { status: Status; orderBy: keyof Issue }
+}
+
+export const columns = [
+  { label: 'Title', orderBy: 'title' },
+  {
+    label: 'Status',
+    orderBy: 'status',
+    width: '150px',
+    className: 'hidden sm:table-cell',
+  },
+  {
+    label: 'Created at',
+    orderBy: 'createdAt',
+    width: '200px',
+    className: 'hidden sm:table-cell',
+  },
+]
+
+export default async function IssuesPage({ searchParams }: IssuesPageProps) {
   return (
     <Section>
       <Flex mb='6' justify='between'>
@@ -24,13 +45,21 @@ export default async function IssuesPage({ searchParams }: { searchParams: { sta
       <Table.Root variant='surface'>
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell width='150px' className='hidden sm:table-cell'>
-              Status
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell width='200px' className='hidden sm:table-cell'>
-              Created at
-            </Table.ColumnHeaderCell>
+            {columns.map((column) => (
+              <Table.ColumnHeaderCell
+                key={column.label}
+                width={column.width}
+                className={column.className}
+              >
+                <Link
+                  href={{ query: { orderBy: column.orderBy } }}
+                  className='flex items-center gap-1 hover:underline underline-offset-4 decoration-dotted'
+                >
+                  {column.label}
+                  {column.orderBy === searchParams.orderBy && <ChevronUpIcon />}
+                </Link>
+              </Table.ColumnHeaderCell>
+            ))}
           </Table.Row>
         </Table.Header>
         <Suspense fallback={<IssuesTableBodyLoading />}>

@@ -2,19 +2,19 @@ import { Table, Strong } from '@radix-ui/themes'
 import { formatDate } from '@/app/lib/utils'
 import { CustomLink, StatusBadge } from '@/app/ui'
 import prisma from '@/prisma/client'
-import { Status } from '@prisma/client'
+import { Issue, Status } from '@prisma/client'
+import { IssuesPageProps, columns } from './page'
 
-export default async function IssuesTableBody({
-  searchParams,
-}: {
-  searchParams: { status: Status }
-}) {
+export default async function IssuesTableBody({ searchParams }: IssuesPageProps) {
   // Validate search params
   const status = Object.values(Status).includes(searchParams.status)
     ? searchParams.status
     : undefined
+  const orderBy = columns.map((column) => column.orderBy).includes(searchParams.orderBy)
+    ? { [searchParams.orderBy]: 'asc' }
+    : undefined
 
-  const issues = await prisma.issue.findMany({ where: { status } })
+  const issues = await prisma.issue.findMany({ where: { status }, orderBy })
   // await new Promise((resolve) => setTimeout(resolve, 1000))
 
   return (
@@ -33,7 +33,9 @@ export default async function IssuesTableBody({
             <Table.Cell className='hidden sm:table-cell'>
               <StatusBadge status={issue.status} />
             </Table.Cell>
-            <Table.Cell className='hidden sm:table-cell'>{formatDate(issue.createdAt)}</Table.Cell>
+            <Table.Cell className='hidden sm:table-cell'>
+              {formatDate(issue.createdAt)}
+            </Table.Cell>
           </Table.Row>
         ))}
     </Table.Body>
