@@ -20,7 +20,7 @@ export default function IssuesTableFilter() {
 
   const router = useRouter()
 
-  // Filter by setting status in url
+  // Apply filter by setting 'status' in the url
   const filter = (value: string) => {
     const params = new URLSearchParams(searchParams)
     if (value !== 'all') {
@@ -28,6 +28,7 @@ export default function IssuesTableFilter() {
     } else {
       params.delete('status')
     }
+    params.set('page', '1') // Reset to the first page when filtering
     const query = params.toString() ? '?' + params.toString() : ''
     router.push('/issues' + query)
   }

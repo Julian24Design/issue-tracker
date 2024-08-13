@@ -1,4 +1,4 @@
-@import "@radix-ui/themes/styles.css";
+@import '@radix-ui/themes/styles.css';
 
 @tailwind base;
 @tailwind components;
@@ -6,5 +6,6 @@
 
 .radix-themes {
   --default-font-family: var(--font-inter);
+  --cursor-disabled: not-allowed;
   --cursor-button: pointer;
 }

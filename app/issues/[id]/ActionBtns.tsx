@@ -29,7 +29,7 @@ export default function ActionBtns({ issue, users }: { issue: Issue; users: User
         onValueChange={assignIssue}
       >
         <Select.Trigger />
-        <Select.Content position='popper'>
+        <Select.Content position='popper' variant='soft' color='gray'>
           {users.map((user) => (
             <Select.Item key={user.id} value={user.id}>
               <Flex align='center' gap='1'>

@@ -1,17 +1,16 @@
 import { Table, Strong } from '@radix-ui/themes'
 import { formatDate } from '@/app/lib/utils'
-import { CustomLink, StatusBadge } from '@/app/ui'
+import { CustomLink, Pagination, StatusBadge } from '@/app/ui'
 import prisma from '@/prisma/client'
-import { Issue, Status } from '@prisma/client'
-import { Suspense } from 'react'
-import IssuesTableLoading from './IssuesTableLoading'
-import IssuesTableHeader, { columnValues } from './IssuesTableHeader'
+import { Status } from '@prisma/client'
+import IssuesTableHeader from './IssuesTableHeader'
+import { IssueQuery } from './page'
 
-export type IssueQuery = {
-  status: Status
-  orderBy: keyof Issue
-  order: 'asc' | 'desc'
-}
+export const COLUMNS = [
+  { label: 'Title', orderBy: 'title' },
+  { label: 'Status', orderBy: 'status', width: '150px' },
+  { label: 'Created at', orderBy: 'createdAt', width: '200px' },
+]
 
 export default async function IssuesTable({
   searchParams,
@@ -25,17 +24,37 @@ export default async function IssuesTable({
   const order = ['asc', 'desc'].includes(searchParams.order)
     ? searchParams.order
     : undefined
-  const orderBy = columnValues.includes(searchParams.orderBy)
+  const orderBy = COLUMNS.map((col) => col.orderBy).includes(searchParams.orderBy)
     ? { [searchParams.orderBy]: order }
     : undefined
 
+  // Get total pages
+  const pageSize = 10
+  const count = await prisma.issue.count({ where: { status } })
+  const totlePages = Math.ceil(count / pageSize)
+
+  // Validate page param
+  let currentPage = Number(searchParams.page)
+  if (Number.isNaN(currentPage) || currentPage < 1) {
+    currentPage = 1
+  } else if (currentPage > totlePages) {
+    currentPage = totlePages
+  }
+
   // Fetch issues
-  const issues = await prisma.issue.findMany({ where: { status }, orderBy })
+  const issues = await prisma.issue.findMany({
+    where: { status },
+    skip: (currentPage - 1) * pageSize,
+    take: pageSize,
+    orderBy,
+  })
+
+  // await new Promise((resolve) => setTimeout(resolve, 1000))
 
   return (
-    <Table.Root variant='surface'>
-      <IssuesTableHeader searchParams={searchParams} />
-      <Suspense fallback={<IssuesTableLoading />}>
+    <>
+      <Table.Root variant='surface'>
+        <IssuesTableHeader />
         <Table.Body>
           {issues &&
             issues.map((issue) => (
@@ -57,7 +76,8 @@ export default async function IssuesTable({
               </Table.Row>
             ))}
         </Table.Body>
-      </Suspense>
-    </Table.Root>
+      </Table.Root>
+      <Pagination totlePages={totlePages} />
+    </>
   )
 }

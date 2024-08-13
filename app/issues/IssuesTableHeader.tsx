@@ -1,44 +1,24 @@
-import { ChevronUpIcon } from '@radix-ui/react-icons'
-import { Table, ChevronDownIcon } from '@radix-ui/themes'
+'use client'
+
 import Link from 'next/link'
-import { IssueQuery } from './IssuesTable'
+import { useSearchParams, usePathname } from 'next/navigation'
+import { Table, ChevronDownIcon } from '@radix-ui/themes'
+import { ChevronUpIcon } from '@radix-ui/react-icons'
+import { COLUMNS } from './IssuesTable'
 
-// Define column headers
-const columns = [
-  { label: 'Title', orderBy: 'title' },
-  { label: 'Status', orderBy: 'status', width: '150px' },
-  { label: 'Created at', orderBy: 'createdAt', width: '200px' },
-]
-export const columnValues = columns.map((col) => col.orderBy)
-
-export default function IssuesTableHeader({
-  searchParams,
-}: {
-  searchParams: IssueQuery
-}) {
-  const { status, orderBy, order } = searchParams
-
-  // Evaluate the toggled order for the case of clicking the same column
-  let toggledOrder: typeof order | undefined
-  if (!order) {
-    toggledOrder = 'asc'
-  } else if (order === 'asc') {
-    toggledOrder = 'desc'
-  }
+export default function IssuesTableHeader() {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const orderBy = searchParams.get('orderBy')
+  const order = searchParams.get('order')
 
   return (
     <Table.Header>
       <Table.Row>
-        {columns.map((col) => (
+        {COLUMNS.map((col) => (
           <Table.ColumnHeaderCell key={col.label} width={col.width}>
             <Link
-              href={{
-                query: {
-                  status: status,
-                  orderBy: col.orderBy,
-                  order: col.orderBy === orderBy ? toggledOrder : 'asc',
-                },
-              }}
+              href={createSortingUrl(col.orderBy)}
               className='flex items-center gap-1 hover:underline underline-offset-4 decoration-dotted'
             >
               {col.label}
@@ -50,4 +30,26 @@ export default function IssuesTableHeader({
       </Table.Row>
     </Table.Header>
   )
+
+  function createSortingUrl(column: string) {
+    const params = new URLSearchParams(searchParams)
+    params.set('orderBy', column)
+
+    // Set the sort order
+    if (column === orderBy) {
+      // Toggle the sort order when the same column is clicked
+      if (order === 'asc') {
+        params.set('order', 'desc')
+      } else if (order === 'desc') {
+        params.delete('order')
+      } else if (!order) {
+        params.set('order', 'asc')
+      }
+      // Default to ascending order when a different column is clicked
+    } else params.set('order', 'asc')
+
+    params.set('page', '1') // Reset to the first page when sorting
+
+    return pathname + '?' + params.toString()
+  }
 }
