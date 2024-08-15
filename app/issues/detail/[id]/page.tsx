@@ -1,11 +1,11 @@
 import { formatDate } from '@/app/lib/utils'
-import { StatusBadge } from '@/app/ui'
+import { StatusBadge } from '@/app/components'
 import prisma from '@/prisma/client'
 import { Box, Card, Flex, Heading, Section, Separator, Text } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
 import Markdown from 'react-markdown'
 import { auth } from '@/auth'
-import ActionBtns from '../ActionBtns'
+import { ActionBtns } from './components'
 import { cache } from 'react'
 import { Metadata } from 'next'
 

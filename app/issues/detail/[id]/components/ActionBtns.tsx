@@ -46,7 +46,7 @@ export default function ActionBtns({ issue, users }: { issue: Issue; users: User
           <Select.Item value='unassigned'>Unassigned</Select.Item>
         </Select.Content>
       </Select.Root>
-      <Link href={`/issues/${issue.id}/edit`}>
+      <Link href={`/issues/edit/${issue.id}`}>
         <Button>
           <Pencil1Icon />
           Edit issue

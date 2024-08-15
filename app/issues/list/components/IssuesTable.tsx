@@ -1,10 +1,10 @@
 import { Table, Strong } from '@radix-ui/themes'
 import { formatDate } from '@/app/lib/utils'
-import { CustomLink, Pagination, StatusBadge } from '@/app/ui'
+import { CustomLink, Pagination, StatusBadge } from '@/app/components'
 import prisma from '@/prisma/client'
 import { Status } from '@prisma/client'
 import IssuesTableHeader from './IssuesTableHeader'
-import { IssueQuery } from './page'
+import { IssueQuery } from '../page'
 
 export const COLUMNS = [
   { label: 'Title', orderBy: 'title' },
@@ -60,7 +60,7 @@ export default async function IssuesTable({
             issues.map((issue) => (
               <Table.Row key={issue.id}>
                 <Table.Cell>
-                  <CustomLink href={`/issues/${issue.id}`}>
+                  <CustomLink href={`/issues/detail/${issue.id}`}>
                     <Strong>{issue.title}</Strong>
                   </CustomLink>
                   <div className='sm:hidden mt-2'>

@@ -2,23 +2,24 @@
 
 import { Status } from '@prisma/client'
 import { Select } from '@radix-ui/themes'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+
+const statuses: { label: string; value: Status | 'all' }[] = [
+  { label: 'Open', value: 'OPEN' },
+  { label: 'In Progress', value: 'IN_PROGRESS' },
+  { label: 'Closed', value: 'CLOSED' },
+  { label: 'All', value: 'all' },
+]
 
 export default function IssuesTableFilter() {
-  const statuses: { label: string; value: Status | 'all' }[] = [
-    { label: 'Open', value: 'OPEN' },
-    { label: 'In Progress', value: 'IN_PROGRESS' },
-    { label: 'Closed', value: 'CLOSED' },
-    { label: 'All', value: 'all' },
-  ]
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   // Get <Select> value from search params
-  const searchParams = useSearchParams()
   const status = searchParams.get('status')
   const statusIsValid = status && Object.values(Status).includes(status as Status)
   const value = statusIsValid ? status : 'all'
-
-  const router = useRouter()
 
   // Apply filter by setting 'status' in the url
   const filter = (value: string) => {
@@ -28,9 +29,9 @@ export default function IssuesTableFilter() {
     } else {
       params.delete('status')
     }
-    params.set('page', '1') // Reset to the first page when filtering
+    params.delete('page') // Reset to the first page when filtering
     const query = params.toString() ? '?' + params.toString() : ''
-    router.push('/issues' + query)
+    router.push(pathname + query)
   }
 
   return (

@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 
 export default function IssuesLayout({ children }: PropsWithChildren) {
   return (
-    <Container size='3' px='5'>
-      {children}
-    </Container>
+    <>
+      <Container size='3' px='5'>
+        {children}
+      </Container>
+    </>
   )
 }

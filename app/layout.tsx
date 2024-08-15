@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Navbar from './Navbar'
 import { Theme, ThemePanel } from '@radix-ui/themes'
 import { Toaster } from 'react-hot-toast'
 import { auth } from '@/auth'
 import { PropsWithChildren } from 'react'
+import Navbar from './components/Navbar'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 

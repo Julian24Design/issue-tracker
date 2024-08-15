@@ -1,12 +1,7 @@
 import { Section, Heading } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
 import prisma from '@/prisma/client'
-import dynamic from 'next/dynamic'
-import IssueFormLoading from '@/app/issues/_components/IssueFormLoading'
-const IssueForm = dynamic(() => import('@/app/issues/_components/IssueForm'), {
-  ssr: false,
-  loading: () => <IssueFormLoading />,
-})
+import { IssueForm } from '@/app/issues/components'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({

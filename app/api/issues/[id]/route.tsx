@@ -1,4 +1,4 @@
-import { PatchIssueSchema } from '@/app/validationSchema'
+import { PatchIssueSchema } from '@/app/lib/validationSchema'
 import prisma from '@/prisma/client'
 import { z } from 'zod'
 

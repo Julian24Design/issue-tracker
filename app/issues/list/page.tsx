@@ -1,11 +1,9 @@
 import Link from 'next/link'
 import { Button, Flex, Section } from '@radix-ui/themes'
 import { PlusIcon } from '@radix-ui/react-icons'
-import IssuesTableFilter from './IssuesTableFilter'
-import IssuesTable from './IssuesTable'
 import { Status, Issue } from '@prisma/client'
 import { Suspense } from 'react'
-import IssuesTableLoading from './IssuesTableLoading'
+import { IssuesTableFilter, IssuesTableLoading, IssuesTable } from './components'
 
 export const dynamic = 'force-dynamic'
 

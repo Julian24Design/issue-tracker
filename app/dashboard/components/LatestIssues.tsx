@@ -2,7 +2,7 @@ import prisma from '@/prisma/client'
 import { Box, Heading, Text, Flex, Avatar, Separator } from '@radix-ui/themes'
 import Link from 'next/link'
 import React from 'react'
-import { StatusBadge } from '../ui'
+import { StatusBadge } from '../../components'
 
 export default async function LatestIssues() {
   const data = await prisma.issue.findMany({

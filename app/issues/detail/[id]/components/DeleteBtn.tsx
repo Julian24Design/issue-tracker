@@ -1,6 +1,6 @@
 'use client'
 
-import { ErrorAlert } from '@/app/ui'
+import { ErrorAlert } from '@/app/components'
 import { TrashIcon } from '@radix-ui/react-icons'
 import { AlertDialog, Button, Flex } from '@radix-ui/themes'
 import axios from 'axios'

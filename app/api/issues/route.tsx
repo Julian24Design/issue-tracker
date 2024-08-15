@@ -1,5 +1,5 @@
-import prisma from "@/prisma/client"
-import { IssueSchema } from "@/app/validationSchema"
+import prisma from '@/prisma/client'
+import { IssueSchema } from '@/app/lib/validationSchema'
 
 export async function POST(request: Request) {
   // Validate request body format
@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   try {
     body = await request.json()
   } catch (error) {
-    return Response.json("Invalid JSON format", { status: 400 })
+    return Response.json('Invalid JSON format', { status: 400 })
   }
 
   // Validate request body schema
@@ -23,6 +23,6 @@ export async function POST(request: Request) {
     return Response.json(newIssue, { status: 201 })
   } catch (error) {
     if (error instanceof Error) console.log(error.message)
-    return Response.json("Unknown error", { status: 500 })
+    return Response.json('Unknown error', { status: 500 })
   }
 }

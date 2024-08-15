@@ -48,7 +48,7 @@ export default function IssuesTableHeader() {
       // Default to ascending order when a different column is clicked
     } else params.set('order', 'asc')
 
-    params.set('page', '1') // Reset to the first page when sorting
+    params.delete('page') // Reset to the first page when sorting
 
     return pathname + '?' + params.toString()
   }

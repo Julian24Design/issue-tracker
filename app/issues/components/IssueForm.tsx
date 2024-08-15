@@ -1,18 +1,23 @@
 'use client'
 
-import { ErrorMsg, ErrorAlert } from '@/app/ui'
-import { IssueSchema } from '@/app/validationSchema'
+import { useState } from 'react'
+import { ErrorMsg, ErrorAlert } from '@/app/components'
+import { IssueSchema } from '@/app/lib/validationSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Issue } from '@prisma/client'
-import { Button, TextField } from '@radix-ui/themes'
+import { Button, Skeleton, TextField } from '@radix-ui/themes'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
-import SimpleMDE from 'react-simplemde-editor'
 import 'easymde/dist/easymde.min.css'
-import { useState } from 'react'
+import dynamic from 'next/dynamic'
+// Disable SSR on client component to prevent ReferrenceError of browser APIs
+const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+  ssr: false,
+  loading: () => <Skeleton height='370px' mb='6' />,
+})
 
 type Inputs = z.infer<typeof IssueSchema>
 
