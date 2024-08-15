@@ -3,9 +3,9 @@
 import Link from 'next/link'
 import { FaShapes } from 'react-icons/fa6'
 import { useSelectedLayoutSegment } from 'next/navigation'
-import { Avatar, Button, HoverCard, Text } from '@radix-ui/themes'
+import { Avatar, Button, HoverCard, Skeleton, Text } from '@radix-ui/themes'
 import { signIn, signOut } from 'next-auth/react'
-import { Session } from 'next-auth'
+import { useSession } from 'next-auth/react'
 
 const links = [
   { label: 'Home', href: '/', segment: null },
@@ -13,12 +13,13 @@ const links = [
   { label: 'Issues', href: '/issues/list', segment: 'issues' },
 ]
 
-export default function Navbar({ session }: { session: Session | null }) {
+export default function Navbar() {
   const segment = useSelectedLayoutSegment()
+  const { status, data } = useSession()
 
   return (
-    <nav className='flex justify-between border-b-2 h-[80px] px-7 items-center text-lg'>
-      <Link href='/'>
+    <nav className='grid grid-cols-3 justify-items-center border-b-2 h-[80px] px-7 items-center text-lg'>
+      <Link href='/' className='justify-self-start'>
         <FaShapes className='text-2xl text-pink-600' />
       </Link>
       <ul className='flex space-x-8 '>
@@ -37,18 +38,25 @@ export default function Navbar({ session }: { session: Session | null }) {
           </li>
         ))}
       </ul>
-      {renderAuthStatus()}
+      <div className='justify-self-end'>{renderAuthStatus()}</div>
     </nav>
   )
 
   function renderAuthStatus() {
-    if (!session?.user) return <Button onClick={() => signIn()}>Sign in</Button>
+    if (status === 'loading')
+      return <Skeleton width='32px' height='32px' mr='2' className='rounded-full' />
+    if (status === 'unauthenticated')
+      return (
+        <Button onClick={() => signIn(undefined, { callbackUrl: '/dashboard' })}>
+          Sign in
+        </Button>
+      )
     return (
       <HoverCard.Root>
         <HoverCard.Trigger>
           <div className='bg-gray-200 bg-opacity-0 hover:bg-opacity-100 p-2  rounded-full transition-all'>
             <Avatar
-              src={session.user.image!}
+              src={data?.user?.image!}
               fallback={<p className='text-1xl'>😀</p>}
               radius='full'
               size='2'
@@ -57,7 +65,7 @@ export default function Navbar({ session }: { session: Session | null }) {
         </HoverCard.Trigger>
         <HoverCard.Content>
           <Text as='p' color='gray' mb='3'>
-            {session.user.email}
+            {data?.user?.email}
           </Text>
           <Button variant='soft' className='w-full' onClick={() => signOut()}>
             Sign out

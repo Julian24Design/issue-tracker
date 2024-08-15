@@ -4,7 +4,6 @@ import prisma from '@/prisma/client'
 import { Box, Card, Flex, Heading, Section, Separator, Text } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
 import Markdown from 'react-markdown'
-import { auth } from '@/auth'
 import { ActionBtns } from './components'
 import { cache } from 'react'
 import { Metadata } from 'next'
@@ -35,8 +34,6 @@ export default async function IssueDetail({ params }: { params: { id: string } }
   // Fetch users for assigning component
   const users = await prisma.user.findMany()
 
-  const session = await auth()
-
   return (
     <Section>
       <Flex
@@ -46,7 +43,7 @@ export default async function IssueDetail({ params }: { params: { id: string } }
         gap='5'
       >
         <Heading>{issue.title}</Heading>
-        {session && <ActionBtns issue={issue} users={users} />}
+        <ActionBtns issue={issue} users={users} />
       </Flex>
       <Flex gap='4' my='5' align='center'>
         <StatusBadge status={issue.status}></StatusBadge>

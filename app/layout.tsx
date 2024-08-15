@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Theme, ThemePanel } from '@radix-ui/themes'
 import { Toaster } from 'react-hot-toast'
-import { auth } from '@/auth'
+import { SessionProvider } from 'next-auth/react'
 import { PropsWithChildren } from 'react'
 import Navbar from './components/Navbar'
 
@@ -17,26 +17,32 @@ export const metadata: Metadata = {
   description: 'The best issue tracker you ever dreamed of.',
 }
 
-export default async function RootLayout({ children }: PropsWithChildren) {
-  const session = await auth()
-
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang='en'>
-      <body className={inter.variable}>
-        <Toaster
-          position='top-center'
-          containerStyle={{ top: 100 }}
-          toastOptions={{
-            style: { padding: '14px 20px', maxWidth: '600px' },
-            error: { style: { color: '#ff4b4b', fontWeight: 600 } },
-          }}
-        />
+      <body className={`${inter.variable} min-h-svh`}>
+        {renderToaster()}
         <Theme accentColor='crimson' grayColor='mauve'>
           {/* <ThemePanel /> */}
-          <Navbar session={session} />
-          {children}
+          <SessionProvider>
+            <Navbar />
+            {children}
+          </SessionProvider>
         </Theme>
       </body>
     </html>
   )
+
+  function renderToaster() {
+    return (
+      <Toaster
+        position='top-center'
+        containerStyle={{ top: 100 }}
+        toastOptions={{
+          style: { padding: '14px 20px', maxWidth: '600px' },
+          error: { style: { color: '#ff4b4b', fontWeight: 600 } },
+        }}
+      />
+    )
+  }
 }
