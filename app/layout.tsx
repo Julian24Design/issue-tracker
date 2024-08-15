@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from './Navbar'
-import { Container, Theme, ThemePanel } from '@radix-ui/themes'
+import { Theme, ThemePanel } from '@radix-ui/themes'
 import { Toaster } from 'react-hot-toast'
 import { auth } from '@/auth'
 import { PropsWithChildren } from 'react'
@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
             error: { style: { color: '#ff4b4b', fontWeight: 600 } },
           }}
         />
-        <Theme accentColor='crimson'>
+        <Theme accentColor='crimson' grayColor='mauve'>
           {/* <ThemePanel /> */}
           <Navbar session={session} />
           {children}

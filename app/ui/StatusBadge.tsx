@@ -8,17 +8,22 @@ const statusMap: Record<Status, { label: string; color: 'orange' | 'blue' | 'gra
 }
 
 export default function StatusBadge({ status }: { status: Status }) {
-  // let color: "orange" | "blue" | "grass"
-  // switch (status) {
-  //   case "OPEN":
-  //     color = "orange"
-  //     break
-  //   case "IN_PROGRESS":
-  //     color = "blue"
-  //     break
-  //   case "CLOSED":
-  //     color = "grass"
-  //     break
-  // }
   return <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
 }
+
+/* Replaced switch-case with Record utility type  
+
+let color: "orange" | "blue" | "grass"
+switch (status) {
+  case "OPEN":
+    color = "orange"
+    break
+  case "IN_PROGRESS":
+    color = "blue"
+    break
+  case "CLOSED":
+    color = "grass"
+    break
+}
+    
+*/

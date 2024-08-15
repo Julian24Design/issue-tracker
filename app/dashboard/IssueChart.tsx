@@ -2,20 +2,20 @@
 
 import { PieChart } from '@mui/x-charts'
 
-export default function IssueChart() {
+export default function IssueChart({
+  data,
+}: {
+  data: { label: string; value: number }[]
+}) {
   return (
     <PieChart
       series={[
         {
-          data: [
-            { value: 50, label: 'Open' },
-            { value: 30, label: 'In Progress' },
-            { value: 20, label: 'Closed' },
-          ],
-          innerRadius: 80,
+          data: data,
+          innerRadius: 90,
           outerRadius: 120,
           paddingAngle: 3,
-          cornerRadius: 3,
+          cornerRadius: 2,
           cx: '58%',
         },
       ]}

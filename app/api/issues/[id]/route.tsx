@@ -17,7 +17,8 @@ export async function PATCH(request: Request, context: { params: { id: string } 
 
   // Validate request body schema
   const validation = PatchIssueSchema.safeParse(body)
-  if (!validation.success) return Response.json(validation.error.format(), { status: 400 })
+  if (!validation.success)
+    return Response.json(validation.error.format(), { status: 400 })
 
   // Validate the existence of issue id and user id
   const { title, description, assignedUserId } = body
@@ -40,6 +41,7 @@ export async function PATCH(request: Request, context: { params: { id: string } 
       where: { id: id },
       data: { title, description, assignedUserId },
     })
+
     return Response.json(updatedIssue, { status: 200 })
   } catch (error) {
     if (error instanceof Error) console.error(error.message)

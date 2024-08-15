@@ -2,7 +2,6 @@
   "name": "issue-tracker",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
@@ -22,7 +21,7 @@
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "easymde": "^2.18.0",
-    "next": "14.2.3",
+    "next": "14.2.5",
     "next-auth": "^5.0.0-beta.20",
     "prisma": "^5.14.0",
     "react": "^18",
