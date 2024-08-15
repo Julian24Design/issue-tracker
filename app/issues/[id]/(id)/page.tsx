@@ -6,17 +6,33 @@ import { notFound } from 'next/navigation'
 import Markdown from 'react-markdown'
 import { auth } from '@/auth'
 import ActionBtns from '../ActionBtns'
+import { cache } from 'react'
+import { Metadata } from 'next'
+
+// Cache a data fetch (Request Memoization in Next.js)
+const fetchIssue = cache((issueId: number) =>
+  prisma.issue.findUnique({ where: { id: issueId } })
+)
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string }
+}): Promise<Metadata> {
+  // Validate id format
+  const id = parseInt(params.id)
+  if (isNaN(id)) notFound()
+
+  const issue = await fetchIssue(id)
+  return { title: issue?.title }
+}
 
 export default async function IssueDetail({ params }: { params: { id: string } }) {
-  // Validate id format
-  const id = Number(params.id)
-  if (Number.isNaN(id)) notFound()
-
   // Fetch issue and validate existence
-  const issue = await prisma.issue.findUnique({ where: { id: id } })
+  const issue = await fetchIssue(parseInt(params.id))
   if (!issue) notFound()
 
-  // Fetch users
+  // Fetch users for assigning component
   const users = await prisma.user.findMany()
 
   const session = await auth()

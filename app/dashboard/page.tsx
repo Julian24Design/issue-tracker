@@ -7,6 +7,8 @@ import LatestIssues from './LatestIssues'
 import Summary from './Summary'
 import Chart from './Chart'
 
+export const metadata = { title: 'Dashboard' }
+
 export default function Dashboard() {
   return (
     <Container>

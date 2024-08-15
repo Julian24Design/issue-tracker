@@ -10,8 +10,11 @@ import { PropsWithChildren } from 'react'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-  title: 'Issue Tracker',
-  description: 'The best issue tracker you ever dream of.',
+  title: {
+    template: '%s - Issue Tracker',
+    default: 'Issue Tracker',
+  },
+  description: 'The best issue tracker you ever dreamed of.',
 }
 
 export default async function RootLayout({ children }: PropsWithChildren) {
