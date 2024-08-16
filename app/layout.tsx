@@ -23,7 +23,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body className={`${inter.variable} min-h-svh`}>
         {renderToaster()}
         <Theme accentColor='crimson' grayColor='mauve'>
-          {/* <ThemePanel /> */}
+          <ThemePanel />
           <SessionProvider>
             <Navbar />
             {children}

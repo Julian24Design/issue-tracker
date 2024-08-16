@@ -1,11 +1,20 @@
 'use client'
 
-import Link from 'next/link'
+import {
+  Avatar,
+  Button,
+  Flex,
+  Grid,
+  HoverCard,
+  Separator,
+  Skeleton,
+  Text,
+} from '@radix-ui/themes'
 import { FaShapes } from 'react-icons/fa6'
+import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
-import { Avatar, Button, HoverCard, Skeleton, Text } from '@radix-ui/themes'
-import { signIn, signOut } from 'next-auth/react'
-import { useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
+import CustomLink from './CustomLink'
 
 const links = [
   { label: 'Home', href: '/', segment: null },
@@ -13,32 +22,33 @@ const links = [
   { label: 'Issues', href: '/issues/list', segment: 'issues' },
 ]
 
-export default function Navbar() {
+export default function Navbar({}: { a: string; b: number }) {
   const segment = useSelectedLayoutSegment()
   const { status, data } = useSession()
 
   return (
-    <nav className='grid grid-cols-3 justify-items-center border-b-2 h-[80px] px-7 items-center text-lg'>
-      <Link href='/' className='justify-self-start'>
-        <FaShapes className='text-2xl text-pink-600' />
-      </Link>
-      <ul className='flex space-x-8 '>
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link
+    <nav>
+      <Grid columns='3' justify='center' align='center' height='80px' px='7'>
+        <Flex>
+          <Link href='/'>
+            <FaShapes className='text-2xl text-[var(--accent-9)]' />
+          </Link>
+        </Flex>
+        <Flex justify='center' gap='8'>
+          {links.map((link, i) => (
+            <CustomLink
+              key={i}
               href={link.href}
-              className={
-                segment === link.segment
-                  ? 'text-pink-600 font-bold'
-                  : 'text-gray-400 font-bold hover:text-gray-500 transition-colors'
-              }
+              weight={segment === link.segment ? 'bold' : undefined}
+              color={segment === link.segment ? undefined : 'gray'}
             >
               {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className='justify-self-end'>{renderAuthStatus()}</div>
+            </CustomLink>
+          ))}
+        </Flex>
+        <Flex justify='end'>{renderAuthStatus()}</Flex>
+      </Grid>
+      <Separator size='4' className='bg-[var(--gray-5)]' />
     </nav>
   )
 
