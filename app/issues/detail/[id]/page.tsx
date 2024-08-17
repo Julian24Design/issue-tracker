@@ -50,10 +50,8 @@ export default async function IssueDetail({ params }: { params: { id: string } }
         <Separator orientation='vertical'></Separator>
         <Text>{formatDate(issue.createdAt)}</Text>
       </Flex>
-      <Card>
-        <Box px='2'>
-          <Markdown className='prose'>{issue.description}</Markdown>
-        </Box>
+      <Card size='4'>
+        <Markdown className='prose'>{issue.description}</Markdown>
       </Card>
     </Section>
   )

@@ -15,9 +15,9 @@ export default function DeleteBtn({ issueId }: { issueId: number }) {
   const deleteIssue = async () => {
     try {
       setDeleting(true)
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      // await new Promise((resolve) => setTimeout(resolve, 1000))
       await axios.delete(`/api/issues/${issueId}`)
-      router.push('/issues')
+      router.push('/issues/list')
       router.refresh()
       toast.success('Issue deleted.')
     } catch (error) {
