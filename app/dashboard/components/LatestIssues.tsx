@@ -11,7 +11,7 @@ export default async function LatestIssues() {
     include: { assignedUser: true },
   })
 
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  await new Promise((resolve) => setTimeout(resolve, 2000))
   return (
     <Box>
       <Heading size='4' mb='6'>

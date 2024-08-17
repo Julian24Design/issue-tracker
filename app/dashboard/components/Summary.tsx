@@ -9,7 +9,7 @@ export default async function Summary() {
     { lable: 'Closed', count: closed },
   ]
 
-  await new Promise((resolve) => setTimeout(resolve, 1000))
+  await new Promise((resolve) => setTimeout(resolve, 3000))
   return (
     <>
       {data.map((d, i) => (
