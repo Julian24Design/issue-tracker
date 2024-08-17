@@ -1,5 +1,10 @@
 import { fetchSummary } from '@/app/lib/data'
-import IssueChart from './IssueChart'
+import dynamic from 'next/dynamic'
+import ChartSkeleton from './ChartSkeleton'
+const IssueChart = dynamic(() => import('./IssueChart'), {
+  ssr: false,
+  loading: () => <ChartSkeleton />,
+})
 
 export default async function Chart() {
   const { open, inProgress, closed } = await fetchSummary()
