@@ -92,7 +92,11 @@ export default function Navbar() {
             <Text as='p' mb='3' size='2'>
               {data?.user?.email}
             </Text>
-            <Button variant='soft' className='w-full' onClick={() => signOut()}>
+            <Button
+              variant='soft'
+              className='w-full'
+              onClick={() => signOut({ callbackUrl: '/' })}
+            >
               Sign out
             </Button>
           </Box>
