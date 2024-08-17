@@ -9,3 +9,7 @@
   --cursor-disabled: not-allowed;
   --cursor-button: pointer;
 }
+
+.rt-Separator {
+  background-color: var(--gray-a5);
+}

@@ -2,6 +2,7 @@
 
 import {
   Avatar,
+  Box,
   Button,
   Flex,
   Grid,
@@ -15,6 +16,12 @@ import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import CustomLink from './CustomLink'
+import dynamic from 'next/dynamic'
+import { ThemeToggleSkeleton } from './ThemeToggle'
+const ThemeToggle = dynamic(() => import('./ThemeToggle'), {
+  ssr: false,
+  loading: () => <ThemeToggleSkeleton />,
+})
 
 const links = [
   { label: 'Home', href: '/', segment: null },
@@ -22,7 +29,7 @@ const links = [
   { label: 'Issues', href: '/issues/list', segment: 'issues' },
 ]
 
-export default function Navbar({}: { a: string; b: number }) {
+export default function Navbar() {
   const segment = useSelectedLayoutSegment()
   const { status, data } = useSession()
 
@@ -46,15 +53,22 @@ export default function Navbar({}: { a: string; b: number }) {
             </CustomLink>
           ))}
         </Flex>
-        <Flex justify='end'>{renderAuthStatus()}</Flex>
+        <Flex justify='end' align='center' gap='5'>
+          <ThemeToggle />
+          {renderUser()}
+        </Flex>
       </Grid>
-      <Separator size='4' className='bg-[var(--gray-5)]' />
+      <Separator size='4' />
     </nav>
   )
 
-  function renderAuthStatus() {
+  function renderUser() {
     if (status === 'loading')
-      return <Skeleton width='32px' height='32px' mr='2' className='rounded-full' />
+      return (
+        <div className='flex aspect-square h-12 items-center justify-center'>
+          <Skeleton width='32px' height='32px' className='rounded-full' />
+        </div>
+      )
     if (status === 'unauthenticated')
       return (
         <Button onClick={() => signIn(undefined, { callbackUrl: '/dashboard' })}>
@@ -64,7 +78,7 @@ export default function Navbar({}: { a: string; b: number }) {
     return (
       <HoverCard.Root>
         <HoverCard.Trigger>
-          <div className='bg-gray-200 bg-opacity-0 hover:bg-opacity-100 p-2  rounded-full transition-all'>
+          <div className='flex aspect-square h-12 items-center justify-center rounded-full bg-transparent transition-all hover:bg-[var(--gray-3)]'>
             <Avatar
               src={data?.user?.image!}
               fallback={<p className='text-1xl'>😀</p>}
@@ -74,12 +88,14 @@ export default function Navbar({}: { a: string; b: number }) {
           </div>
         </HoverCard.Trigger>
         <HoverCard.Content>
-          <Text as='p' color='gray' mb='3'>
-            {data?.user?.email}
-          </Text>
-          <Button variant='soft' className='w-full' onClick={() => signOut()}>
-            Sign out
-          </Button>
+          <Box p='1'>
+            <Text as='p' mb='3' size='2'>
+              {data?.user?.email}
+            </Text>
+            <Button variant='soft' className='w-full' onClick={() => signOut()}>
+              Sign out
+            </Button>
+          </Box>
         </HoverCard.Content>
       </HoverCard.Root>
     )

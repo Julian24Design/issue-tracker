@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast'
 import { SessionProvider } from 'next-auth/react'
 import { PropsWithChildren } from 'react'
 import Navbar from './components/Navbar'
+import { ThemeProvider } from 'next-themes'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
@@ -23,10 +24,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body className={`${inter.variable} min-h-svh`}>
         {renderToaster()}
         <Theme accentColor='crimson' grayColor='mauve'>
-          <ThemePanel />
+          {/* <ThemePanel /> */}
           <SessionProvider>
-            <Navbar />
-            {children}
+            <ThemeProvider attribute={['class', 'data-theme']}>
+              <Navbar />
+              {children}
+            </ThemeProvider>
           </SessionProvider>
         </Theme>
       </body>
@@ -39,7 +42,12 @@ export default function RootLayout({ children }: PropsWithChildren) {
         position='top-center'
         containerStyle={{ top: 100 }}
         toastOptions={{
-          style: { padding: '14px 20px', maxWidth: '600px' },
+          style: {
+            padding: '14px 20px',
+            maxWidth: '600px',
+            backgroundColor: 'var(--color-panel-solid)',
+            color: 'var(--gray-11)',
+          },
           error: { style: { color: '#ff4b4b', fontWeight: 600 } },
         }}
       />
