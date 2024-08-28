@@ -39,3 +39,5 @@ prisma/*.sql
 
 # script
 git-filter-repo.py
+# Sentry Config File
+.env.sentry-build-plugin
