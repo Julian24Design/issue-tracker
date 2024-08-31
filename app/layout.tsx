@@ -23,19 +23,14 @@ export default function RootLayout({ children }: PropsWithChildren) {
     <html lang='en'>
       <body className={`${inter.variable} min-h-svh`}>
         {renderToaster()}
-        <Theme
-          accentColor='crimson'
-          grayColor='mauve'
-          className='transition-colors duration-500'
-        >
-          {/* <ThemePanel /> */}
-          <SessionProvider>
-            <ThemeProvider attribute={['class', 'data-theme']}>
+        <SessionProvider>
+          <ThemeProvider attribute={['class', 'data-theme']}>
+            <Theme accentColor='crimson' grayColor='mauve' className='transition-colors'>
               <Navbar />
               {children}
-            </ThemeProvider>
-          </SessionProvider>
-        </Theme>
+            </Theme>
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   )

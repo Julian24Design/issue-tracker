@@ -54,8 +54,8 @@ importers:
         specifier: ^5.0.0-beta.20
         version: 5.0.0-beta.20(next@14.2.5(@babel/core@7.25.2)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       next-themes:
-        specifier: github:pacocoursey/next-themes#path:next-themes
-        version: https://codeload.github.com/pacocoursey/next-themes/tar.gz/bf0c5a45eaf6fb2b336a6b93840e4ec572bc08c8#path:next-themes(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: github:Julian24Design/next-themes#path:next-themes&multi-attributes
+        version: https://codeload.github.com/Julian24Design/next-themes/tar.gz/a4589b0ea5e3d2c80c6cedbd760419e147394646#path:next-themes(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       prisma:
         specifier: ^5.14.0
         version: 5.18.0
@@ -2981,8 +2981,8 @@ packages:
       nodemailer:
         optional: true
 
-  next-themes@https://codeload.github.com/pacocoursey/next-themes/tar.gz/bf0c5a45eaf6fb2b336a6b93840e4ec572bc08c8#path:next-themes:
-    resolution: {path: next-themes, tarball: https://codeload.github.com/pacocoursey/next-themes/tar.gz/bf0c5a45eaf6fb2b336a6b93840e4ec572bc08c8}
+  next-themes@https://codeload.github.com/Julian24Design/next-themes/tar.gz/a4589b0ea5e3d2c80c6cedbd760419e147394646#path:next-themes:
+    resolution: {path: next-themes, tarball: https://codeload.github.com/Julian24Design/next-themes/tar.gz/a4589b0ea5e3d2c80c6cedbd760419e147394646}
     version: 0.3.0
     peerDependencies:
       react: ^16.8 || ^17 || ^18
@@ -7397,7 +7397,7 @@ snapshots:
       next: 14.2.5(@babel/core@7.25.2)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
 
-  next-themes@https://codeload.github.com/pacocoursey/next-themes/tar.gz/bf0c5a45eaf6fb2b336a6b93840e4ec572bc08c8#path:next-themes(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next-themes@https://codeload.github.com/Julian24Design/next-themes/tar.gz/a4589b0ea5e3d2c80c6cedbd760419e147394646#path:next-themes(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
