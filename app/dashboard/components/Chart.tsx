@@ -1,4 +1,6 @@
 import { fetchSummary } from '@/app/lib/data'
+
+// next/dynamic is a composite of React.lazy() and Suspense
 import dynamic from 'next/dynamic'
 import ChartSkeleton from './ChartSkeleton'
 const IssueChart = dynamic(() => import('./IssueChart'), {
@@ -14,6 +16,5 @@ export default async function Chart() {
     { label: 'Closed', value: closed, color: 'var(--grass-9)' },
   ]
 
-  await new Promise((resolve) => setTimeout(resolve, 1000))
   return <IssueChart data={data} />
 }

@@ -1,12 +1,12 @@
 import { Table, Skeleton } from '@radix-ui/themes'
-import { COLUMNS } from './IssuesTable'
+import { columns } from './IssuesTable'
 
 export default function IssuesTableBodyLoading() {
   return (
     <Table.Root variant='surface'>
       <Table.Header>
         <Table.Row>
-          {COLUMNS.map((col) => (
+          {columns.map((col) => (
             <Table.ColumnHeaderCell key={col.label} width={col.width}>
               {col.label}
             </Table.ColumnHeaderCell>
@@ -18,7 +18,7 @@ export default function IssuesTableBodyLoading() {
           <Table.Row key={index}>
             <Table.Cell>
               <Skeleton height='21px' />
-              <div className='sm:hidden mt-2'>
+              <div className='mt-2 sm:hidden'>
                 <Skeleton />
               </div>
             </Table.Cell>

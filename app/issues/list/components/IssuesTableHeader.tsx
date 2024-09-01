@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useSearchParams, usePathname } from 'next/navigation'
 import { Table, ChevronDownIcon } from '@radix-ui/themes'
 import { ChevronUpIcon } from '@radix-ui/react-icons'
-import { COLUMNS } from './IssuesTable'
+import { columns } from './IssuesTable'
 
 export default function IssuesTableHeader() {
   const pathname = usePathname()
@@ -15,11 +15,11 @@ export default function IssuesTableHeader() {
   return (
     <Table.Header>
       <Table.Row>
-        {COLUMNS.map((col) => (
+        {columns.map((col) => (
           <Table.ColumnHeaderCell key={col.label} width={col.width}>
             <Link
               href={createSortingUrl(col.orderBy)}
-              className='flex items-center gap-1 hover:underline underline-offset-4 decoration-dotted'
+              className='flex items-center gap-1 decoration-dotted underline-offset-4 hover:underline'
             >
               {col.label}
               {col.orderBy === orderBy && order === 'asc' && <ChevronUpIcon />}
