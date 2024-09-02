@@ -36,15 +36,15 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      // await new Promise((resolve) => setTimeout(resolve, 1000))
       if (issue) {
         await axios.patch(`/api/issues/${issue.id}`, data)
-        router.push(`/issues/${issue.id}`)
+        router.push(`/issues/detail/${issue.id}`)
         router.refresh()
         toast.success('Issue updated.')
       } else {
         await axios.post('/api/issues', data)
-        router.push('/issues')
+        router.push('/issues/list')
         router.refresh()
         toast.success('New issue added.')
       }
@@ -62,7 +62,7 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
     <>
       <ErrorAlert isError={isError} setError={setError} errorMsg={errorMsg} />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='space-y-3 mb-6'>
+        <div className='mb-6 space-y-3'>
           <TextField.Root
             placeholder='Title'
             defaultValue={issue?.title}

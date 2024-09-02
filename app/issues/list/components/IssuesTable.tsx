@@ -17,13 +17,20 @@ export default async function IssuesTable({
 }: {
   query: IssueQuery & { pageSize: number; totlePages: number }
 }) {
-  // Validate order params
-  const order = ['asc', 'desc'].includes(query.order!) ? query.order : undefined
-  const orderBy = Object.values(Prisma.IssueScalarFieldEnum).includes(query.orderBy!)
-    ? { [query.orderBy!]: order }
+  // Parse order params
+  const order = Object.values(Prisma.SortOrder).includes(query.order!)
+    ? query.order
     : undefined
+  let orderBy
+  if (order) {
+    orderBy = Object.values(Prisma.IssueScalarFieldEnum).includes(query.orderBy!)
+      ? { [query.orderBy!]: order }
+      : undefined
+  } else {
+    orderBy = { createdAt: Prisma.SortOrder.desc }
+  }
 
-  // Validate page param
+  // Parse page param
   let page = Number(query.page)
   if (Number.isNaN(page) || page < 1) {
     page = 1

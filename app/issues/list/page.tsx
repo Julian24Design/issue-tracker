@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Button, Flex, Section } from '@radix-ui/themes'
 import { PlusIcon } from '@radix-ui/react-icons'
-import { Status, Issue } from '@prisma/client'
+import { Status, Issue, Prisma } from '@prisma/client'
 import { Suspense } from 'react'
 import { IssuesTableFilter, IssuesTableLoading, IssuesTable } from './components'
 import { Pagination } from '@/app/components'
@@ -12,12 +12,12 @@ export const dynamic = 'force-dynamic'
 export type IssueQuery = {
   status?: Status
   orderBy?: keyof Issue
-  order?: string
+  order?: Prisma.SortOrder
   page?: string
 }
 
 export default async function IssuesPage({ searchParams }: { searchParams: IssueQuery }) {
-  // Validate search params
+  // Parse status param
   const status = Object.values(Status).includes(searchParams.status!)
     ? searchParams.status
     : undefined

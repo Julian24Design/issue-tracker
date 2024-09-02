@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import { useSearchParams, usePathname } from 'next/navigation'
-import { Table, ChevronDownIcon } from '@radix-ui/themes'
-import { ChevronUpIcon } from '@radix-ui/react-icons'
+import { Table } from '@radix-ui/themes'
+import { ChevronUpIcon, ChevronDownIcon } from '@radix-ui/react-icons'
 import { columns } from './IssuesTable'
 
 export default function IssuesTableHeader() {
@@ -19,7 +19,7 @@ export default function IssuesTableHeader() {
           <Table.ColumnHeaderCell key={col.label} width={col.width}>
             <Link
               href={createSortingUrl(col.orderBy)}
-              className='flex items-center gap-1 decoration-dotted underline-offset-4 hover:underline'
+              className='flex items-center gap-2 decoration-dotted underline-offset-4 hover:underline'
             >
               {col.label}
               {col.orderBy === orderBy && order === 'asc' && <ChevronUpIcon />}
@@ -42,6 +42,7 @@ export default function IssuesTableHeader() {
         params.set('order', 'desc')
       } else if (order === 'desc') {
         params.delete('order')
+        params.delete('orderBy')
       } else if (!order) {
         params.set('order', 'asc')
       }
