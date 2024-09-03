@@ -29,7 +29,7 @@ export default async function IssuesPage({ searchParams }: { searchParams: Issue
 
   // Set default page to 1 if not provided
   const query = new URLSearchParams(searchParams)
-  if (!searchParams.page) query.set('page', '1')
+  // if (!searchParams.page) query.set('page', '1')
   const queryStr = query.toString()
 
   return (

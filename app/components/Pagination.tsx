@@ -31,7 +31,7 @@ export default function Pagination({ totlePages }: { totlePages: number }) {
         </Link>
       )}
 
-      {[...Array(totlePages)].map((e, i) => (
+      {[...Array(totlePages)].map((_, i) => (
         <Link key={i} href={createPageUrl(i + 1)}>
           <Button
             className='w-8'
@@ -59,7 +59,11 @@ export default function Pagination({ totlePages }: { totlePages: number }) {
 
   function createPageUrl(page: number) {
     const params = new URLSearchParams(searchParams)
-    params.set('page', page.toString())
-    return pathname + '?' + params.toString()
+    if (page === 1) {
+      params.delete('page')
+    } else {
+      params.set('page', page.toString())
+    }
+    return params.size ? pathname + '?' + params.toString() : pathname
   }
 }
